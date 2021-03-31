@@ -1,6 +1,6 @@
 # CS 6350 - Machine Learning - Mid Report
 
-## Progress Towards the Goal (50%)
+## Progress Towards the Goal
 
 ### The Data Space
 
@@ -16,13 +16,39 @@ I initially tried the key means algorithm. This algorithm is an unsupervised clu
 
 I hoped to see the rows in my data set grouped into clusters that would indicate similarities in the cause of the bugs. Due to the fact that I don't know how many bugs are in a particular web browser layout engine, and there seems to be no good way to find this information, determining the number of clusters to use in the K means algorithm proves difficult.
 
+#### KMeans Algorithm - Number of Clusters
 
+While searching for the right number of clusters to use for the K means algorithm, I attempted to run the experiment in a loop. I used a variable number of clusters from 3 to 100. With this approach, I was hoping to find a lot of separate clusters where highly related. One of the side effects of using this approach was that I found that several of the bugs had the exact same set of styles. A few of the bugs that I found had extremely long lists of styles used. These bugs were categorized into their own clusters in the experiments were the number of clusters was greater than or equal to 20.
 
+One of the heuristics that I used to judge whether this algorithm was performing as expected has to do with specific styles. In web frameworks, the styles often come in pairs. For example, "margin–right" will set the right margin on a container while "margin-left" will set the left margin on a container. I expected that bugs which include "margin-right" could also be found using an inverse set of properties where "margin-left" is substituted for that style. This hypothesis proved to be correct as the number of clusters used in this algorithm exceeded 30. In one such case, "inset-block-end" and "inset-block-start" proved to be near interchangeable. Seeing this would go well with the expectation that this algorithm is clustering bugs into sets of bugs that have the same root cause. This observation confirmed my expectations and showed value obtained from this approach already.
 
-## Detailed plan for the rest of the project (30%)
+#### The "Display" Attribute
 
-## References (20%)
-- https://builtin.com/data-science/unsupervised-learning-python - O
+One of the observations I've made at this point is that the "display" attribute tends to have a consistent value throughout the bugs within a cluster. This is especially true as the number of clusters grows. The "display" attribute is the styling attribute that tells the browser what mode HTML elements are in when they are displayed. For example, "display:block" treates every HTML element as it's own block structure with no overlap, while "display:absolute" treats the web page as a canvas where every element has an absolute position relative to the top-left of the page. You can see how this "display" property vastly changes the layout of the page.
+
+The interesting part here is that, within clusters of bugs, the display attribute value tends to be consistent. This would suggest that similar bugs are caused by maladies in a piece of the code. This would also suggest that sections of the code base are likely broken up based on the value of this display attribute.
+
+## Detailed plan for the rest of the project
+
+One of the questions that remains to ask about the kmeans algorithm is "How many clusters are ideal?". This is a difficult question to answer because it requires us to know the answer to this research project before answering it. If we knew how many layout bugs are in a web browser's code base, we would know how many clusters to use but we also wouldn't need to complete this project.
+
+### Unsupervised Hierarchical Clustering
+
+In order to do more exploratory learning about the dataset, I'd like to try a number of different unsupervised clustering algorithms. For example, hierarchical clustering will allow me to see bugs which are most similar and then to elucidate bugs which may have an overarching cause. In the context of finding bugs to fix, this hierarchy will be helpful in determining what other bugs may be most similar. In the simplest case, fixing a single bug will fix any duplicates of that bug. In a slightly more complicated case, two bugs may be caused by similar, but not identical, edge cases. If this is the case, fixing the two edge cases at the same time will save time and money for browser developers by save the cost of context switching and retesting that area of the code.
+
+### Extra Feature Extraction
+
+In this early stage of the project, I relied on the overall set of styles used in the creation of the bug. One improvement could be made is to separate these styles into initial styles and styles which are applied later. This would give the algorithm extra leverage in clustering the groups of bugs correctly.
+
+Other data could also be extracted from the initial bug reports. The two main pieces in the bug reports are the styles used and the HTML element structure. The HTML structure could be mined for features and extra data, such as the number of HTML element used or the depth of the nested HTML tree. These extra features with it would further help to categorize the bugs found.
+
+## References
+
+- https://builtin.com/data-science/unsupervised-learning-python
+- https://realpython.com/k-means-clustering-python/
+- https://www.w3schools.com/cssref/pr_class_display.asp
+- https://www.guru99.com/unsupervised-machine-learning.html
+- https://towardsdatascience.com/unsupervised-learning-and-data-clustering-eeecb78b422a
 
 
 

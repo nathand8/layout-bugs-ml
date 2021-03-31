@@ -34,7 +34,7 @@ def getBooleanAttributeRows():
     all_styles_ordered = list(all_styles_set)
     all_styles_ordered.sort()
     data_booleans = [getBooleans(row_styles, all_styles_ordered) for row_styles in styles_used]
-    return data_booleans
+    return data_booleans, all_styles_ordered
 
 if __name__ == "__main__":
     data = getBooleanAttributeRows()
