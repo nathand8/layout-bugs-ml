@@ -77,3 +77,11 @@ After finding bugs in Chrome, our initial plan was to submit them all to the Chr
 ## Why do you want to use machine learning rather than traditional/existing methods?
 
 Manually looking at these bugs is proving too tedious a process and creating a program to sort them would still require work directly proportional to the number of bugs we find. We’d like a sorting process that scales with our bug-finding capabilities.
+
+
+
+# CS 6350 - Machine Learning - Final Report
+
+
+# References
+- https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html
